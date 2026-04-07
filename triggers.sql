@@ -55,30 +55,6 @@ BEGIN
 END;
 
 -- ============================================================
--- 5. Prevent duplicate admin email
--- ============================================================
-CREATE TRIGGER IF NOT EXISTS trg_unique_admin_email
-BEFORE INSERT ON Admin
-BEGIN
-    SELECT CASE
-        WHEN (SELECT COUNT(*) FROM Admin WHERE Email = NEW.Email) > 0
-        THEN RAISE(ABORT, 'Error: Admin email already exists.')
-    END;
-END;
-
--- ============================================================
--- 6. Prevent duplicate member email
--- ============================================================
-CREATE TRIGGER IF NOT EXISTS trg_unique_member_email
-BEFORE INSERT ON Member
-BEGIN
-    SELECT CASE
-        WHEN (SELECT COUNT(*) FROM Member WHERE Email = NEW.Email) > 0
-        THEN RAISE(ABORT, 'Error: Member email already exists.')
-    END;
-END;
-
--- ============================================================
 -- 7. Prevent duplicate event name
 -- ============================================================
 CREATE TRIGGER IF NOT EXISTS trg_unique_event_name

@@ -11,7 +11,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE Admin (
     AdminID     INTEGER PRIMARY KEY AUTOINCREMENT,
     AdminName   VARCHAR(100) NOT NULL,
-    Email       VARCHAR(100) NOT NULL,
+    Email       VARCHAR(100) NOT NULL UNIQUE,
     PhoneNo     VARCHAR(20),
     Role        VARCHAR(50)  NOT NULL,
     CHECK (LENGTH(AdminName) > 0),
@@ -27,7 +27,7 @@ CREATE TABLE Member (
     FullName         VARCHAR(100) NOT NULL,
     SID              VARCHAR(30)  NOT NULL UNIQUE,
     PhoneNo          VARCHAR(20),
-    Email            VARCHAR(100) NOT NULL,
+    Email            VARCHAR(100) NOT NULL UNIQUE,
     Address          VARCHAR(255),
     JoinDate         DATE         NOT NULL,
     MembershipStatus VARCHAR(30)  NOT NULL DEFAULT 'Inactive',

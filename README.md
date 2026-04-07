@@ -96,8 +96,6 @@ The database enforces data integrity at the database level:
 | `trg_check_active_before_registration` | Block event registration for inactive members |
 | `trg_check_event_date_before_registration` | Block registration for past events |
 | `trg_check_payment_date` | Block future-dated payments |
-| `trg_unique_admin_email` | Prevent duplicate admin emails |
-| `trg_unique_member_email` | Prevent duplicate member emails |
 | `trg_unique_event_name` | Prevent duplicate events (same name + date) |
 
 ## Reports (Views)

@@ -16,7 +16,7 @@ PRAGMA foreign_keys = ON;
 CREATE TABLE Admin (
     AdminID     INTEGER PRIMARY KEY AUTOINCREMENT,
     AdminName   VARCHAR(100) NOT NULL,
-    Email       VARCHAR(100) NOT NULL,
+    Email       VARCHAR(100) NOT NULL UNIQUE,
     PhoneNo     VARCHAR(20),
     Role        VARCHAR(50)  NOT NULL,
     CHECK (LENGTH(AdminName) > 0),
@@ -29,7 +29,7 @@ CREATE TABLE Member (
     FullName         VARCHAR(100) NOT NULL,
     SID              VARCHAR(30)  NOT NULL UNIQUE,
     PhoneNo          VARCHAR(20),
-    Email            VARCHAR(100) NOT NULL,
+    Email            VARCHAR(100) NOT NULL UNIQUE,
     Address          VARCHAR(255),
     JoinDate         DATE         NOT NULL,
     MembershipStatus VARCHAR(30)  NOT NULL DEFAULT 'Inactive',
@@ -111,24 +111,6 @@ BEGIN
     SELECT CASE
         WHEN NEW.PaymentDate > DATE('now')
         THEN RAISE(ABORT, 'Error: Payment date cannot be in the future.')
-    END;
-END;
-
-CREATE TRIGGER IF NOT EXISTS trg_unique_admin_email
-BEFORE INSERT ON Admin
-BEGIN
-    SELECT CASE
-        WHEN (SELECT COUNT(*) FROM Admin WHERE Email = NEW.Email) > 0
-        THEN RAISE(ABORT, 'Error: Admin email already exists.')
-    END;
-END;
-
-CREATE TRIGGER IF NOT EXISTS trg_unique_member_email
-BEFORE INSERT ON Member
-BEGIN
-    SELECT CASE
-        WHEN (SELECT COUNT(*) FROM Member WHERE Email = NEW.Email) > 0
-        THEN RAISE(ABORT, 'Error: Member email already exists.')
     END;
 END;
 
