@@ -20,6 +20,7 @@ def build_database():
     print("  BUILDING DATABASE")
     print("=" * 60)
 
+    conn = None
     if os.path.exists(DB_NAME):
         try:
             os.remove(DB_NAME)
@@ -29,10 +30,8 @@ def build_database():
             conn = sqlite3.connect(DB_NAME)
             conn.executescript("DROP TABLE IF EXISTS EventRegistration; DROP TABLE IF EXISTS Payment; DROP TABLE IF EXISTS SportsEvent; DROP TABLE IF EXISTS Member; DROP TABLE IF EXISTS Admin; DROP VIEW IF EXISTS vw_MemberList; DROP VIEW IF EXISTS vw_MembershipStatus; DROP VIEW IF EXISTS vw_PaymentReport; DROP VIEW IF EXISTS vw_EventList; DROP VIEW IF EXISTS vw_EventRegistrationReport; DROP TRIGGER IF EXISTS trg_activate_member_on_payment; DROP TRIGGER IF EXISTS trg_check_active_before_registration; DROP TRIGGER IF EXISTS trg_check_event_date_before_registration; DROP TRIGGER IF EXISTS trg_check_payment_date; DROP TRIGGER IF EXISTS trg_unique_event_name;")
             conn.close()
-    else:
-        conn = sqlite3.connect(DB_NAME)
-
-    if 'conn' not in dir():
+            conn = None
+    if conn is None:
         conn = sqlite3.connect(DB_NAME)
 
     files = ['create_tables.sql', 'triggers.sql', 'views_and_reports.sql']
